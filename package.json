@@ -26,7 +26,7 @@
     "koishi": "^4.17.2"
   },
   "dependencies": {
-    "koishi-plugin-cron": "^3.1.0",
+    "koishi-plugin-cron": "^3.1.0"
   },
   "koishi": {
     "service": {
