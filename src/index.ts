@@ -53,7 +53,7 @@ export function apply(ctx: Context,config: Config) {
           }
         }
     } catch (error) {
-      logger.error(`发生错误`)
+      logger.error(`无法连接到HTTP API`)
 
     }
 

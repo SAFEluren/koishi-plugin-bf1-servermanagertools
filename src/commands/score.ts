@@ -1,5 +1,4 @@
 import { Context, Logger } from 'koishi';
-import { } from 'koishi-plugin-puppeteer'
 
 export function score(ctx: Context) {
   ctx.command('score', '查看局内比分', { authority: 0 })
