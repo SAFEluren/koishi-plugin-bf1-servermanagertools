@@ -1,6 +1,6 @@
 {
   "name": "koishi-plugin-bf1-servermanagertools",
-  "description": "",
+  "description": "与BF1ClientAPI联动，获取战地1游戏比分信息",
   "version": "0.0.1",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
@@ -8,12 +8,18 @@
     "lib",
     "dist"
   ],
-  "license": "MIT",
+  "license": "MIT",                         
+  "homepage": "https://example.com",        
+  "repository": {                          
+    "type": "git",
+    "url": "git+https://github.com/safeluren/koishi-plugin-bf1-servermanagertools.git"
+  },
   "scripts": {},
   "keywords": [
     "chatbot",
     "koishi",
-    "plugin"
+    "plugin",
+    "battlefield"
   ],
   "devDependencies": {},
   "peerDependencies": {
