@@ -1,7 +1,6 @@
 import { Context, Schema, Session } from 'koishi'
 import { score } from './commands/score'
 import { } from 'koishi-plugin-cron';
-
 export const name = 'bf1-servermanagertools'
 export const inject = {
   required: ['cron']
@@ -24,7 +23,7 @@ export function apply(ctx: Context,config: Config) {
     try {
       const respone = await ctx.http.get(apiurl)
 
-      let message: string = `[比分推送 间隔2分钟]`
+      let message: string = `[比分推送|间隔2分钟]`
       message += `\n游戏时间: ${respone.data.gameTime}`
       // 判断是否为征服
       if (respone.data.gameMode == "Conquest0") {
