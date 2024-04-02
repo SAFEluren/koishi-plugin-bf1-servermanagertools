@@ -43,6 +43,7 @@ export function apply(ctx: Context, config: Config) {
       return `访问gametoolsAPI失败。(${error})`;
     }
 
+    logger.info(gtServerData.playerAmount)
     if (gtServerData.playerAmount <= 30){
       return false
     }
