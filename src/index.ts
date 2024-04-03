@@ -16,7 +16,8 @@ export const Config: Schema<Config> = Schema.object({
 export function apply(ctx: Context, config: Config) {
   const logger = ctx.logger(name)
   const { pushGroupIDs } = config
-  ctx.cron('*/2 * * * *', async () => {
+  const newLocal = '*/2 * * * *';
+  ctx.cron(newLocal, async () => {
     logger.info(`into cron`)
     // 每隔 2 分钟执行
     var serverData
@@ -43,13 +44,16 @@ export function apply(ctx: Context, config: Config) {
       return `访问gametoolsAPI失败。(${error})`;
     }
 
-    logger.info(gtServerData.playerAmount)
-    if (gtServerData.playerAmount <= 30){
+    logger.info(`服内当前玩家:${gtServerData.playerAmount} , 队伍[${serverData.team1.name}]:${serverData.team1.allScore} | 队伍[${serverData.team2.name}]:${serverData.team2.allScore} | 游戏时间:${serverData.time} `)
+    // 检测服内无人则不推送消息
+    // 如果服务器玩家人数小于等于30(30来自于游戏开始的人数) 或 双方分数加起来等于0 或服务器游戏时间等于0
+    // 后两条同时包括了API出错 所有数据都为0时
+    if (gtServerData.playerAmount <= 30 || serverData.team1.allScore + serverData.team2.allScore == 0 || serverData.time == 0 ){
       return false
     }
     let message: string = `[比分推送|间隔2分钟]`
     message += `\n游戏时间: ${serverData.gameTime}`
-    serverData += `\n当前人数: ${gtServerData.playerAmount} / ${gtServerData.maxPlayerAmount}`
+    message += `\n当前人数: ${gtServerData.playerAmount} / ${gtServerData.maxPlayerAmount}`
     // 判断是否为征服
     if (serverData.gameMode == "Conquest0") {
       message += `\n${serverData.team1.name}:${serverData.team1.allScore} / ${serverData.team2.name}:${serverData.team2.allScore}`
@@ -70,6 +74,7 @@ export function apply(ctx: Context, config: Config) {
     }
     message += `\n--------------------`
     message += `\n${serverDataTimestamp}`
+    logger.debug(message)
     for (const currentBot of ctx.bots) {
       for (const groupId of pushGroupIDs) {
         await currentBot.sendMessage(groupId, message);
